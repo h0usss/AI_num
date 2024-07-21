@@ -1,0 +1,14 @@
+C:\Users\nikit\Работы\C#\Numbers\Numbers\bin\Debug\Numbers.exe.config
+C:\Users\nikit\Работы\C#\Numbers\Numbers\bin\Debug\Numbers.exe
+C:\Users\nikit\Работы\C#\Numbers\Numbers\bin\Debug\Numbers.pdb
+C:\Users\nikit\Работы\C#\Numbers\Numbers\obj\Debug\Numbers.csproj.AssemblyReference.cache
+C:\Users\nikit\Работы\C#\Numbers\Numbers\obj\Debug\Numbers.Properties.Resources.resources
+C:\Users\nikit\Работы\C#\Numbers\Numbers\obj\Debug\Numbers.csproj.GenerateResource.cache
+C:\Users\nikit\Работы\C#\Numbers\Numbers\obj\Debug\Numbers.csproj.CoreCompileInputs.cache
+C:\Users\nikit\Работы\C#\Numbers\Numbers\obj\Debug\Numbers.exe
+C:\Users\nikit\Работы\C#\Numbers\Numbers\obj\Debug\Numbers.pdb
+C:\Users\nikit\Работы\C#\Numbers\Numbers\obj\Debug\Numbers.Form1.resources
+C:\Users\nikit\Работы\C#\Numbers\Numbers\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\nikit\Работы\C#\Numbers\Numbers\obj\Debug\Numbers.csproj.CopyComplete
+C:\Users\nikit\Работы\C#\Numbers\Numbers\bin\Debug\MathNet.Numerics.dll
+C:\Users\nikit\Работы\C#\Numbers\Numbers\bin\Debug\MathNet.Numerics.xml

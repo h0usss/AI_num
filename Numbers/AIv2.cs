@@ -84,8 +84,10 @@ namespace Numbers
 
                     BTrain(bachImage, ans);
                     c += BACH_SIZE;
+                    //break;
                 }
                 CalcErr();
+                //break;
             }
         }
         public void BTrain(Matrix<double> inputLayer, Vector<double> answer)
@@ -128,13 +130,17 @@ namespace Numbers
                 Weight[i - 1] -= Layers[i - 1].Transpose() * dEdt * LearnSpeed;
                 Bias[i - 1] -= dEdt.ColumnSums() * LearnSpeed;
                 dEdH = dEdt * Weight[i - 1].Transpose();
+
+                Console.WriteLine($"Weight[] = {Weight[1][14,14]}");
+                Console.WriteLine($"Bias[]   = {Bias[0][0]}");
+                Console.WriteLine($"Layer[]  = {Layers[3][0,0]}");
+                Console.WriteLine();
             }
 
         }
 
         public double[] Predict(double[] inputLayer)
         {
-            Matrix<double> vector = Normalize(inputLayer);
             List<Matrix<double>> Layer = new List<Matrix<double>>(CountAllLayers);
 
             for (int i = 0; i < CountAllLayers; i++)
@@ -148,7 +154,7 @@ namespace Numbers
             for (int i = 0; i < CountAllLayers - 1; i++)
             {
                 if (i == 0)
-                    Layer[i + 1] = vector * Weight[i];
+                    Layer[i + 1] = Normalize(inputLayer) * Weight[i];
                 else
                     Layer[i + 1] = Layer[i] * Weight[i];
 
@@ -323,7 +329,11 @@ namespace Numbers
                 for (int j = 0; j < mat.ColumnCount; j++)
                     sum += Math.Exp(mat[i, j]);
                 for (int j = 0; j < mat.ColumnCount; j++)
+                {
                     ans[i, j] = Math.Exp(mat[i, j]) / sum;
+                    if (ans[i, j] > 1)
+                        continue;
+                }
             }
             return ans;
         }

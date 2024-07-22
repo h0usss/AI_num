@@ -52,16 +52,6 @@
             this.PB9 = new System.Windows.Forms.ProgressBar();
             this.button1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.LB0 = new System.Windows.Forms.Label();
-            this.LB1 = new System.Windows.Forms.Label();
-            this.LB2 = new System.Windows.Forms.Label();
-            this.LB3 = new System.Windows.Forms.Label();
-            this.LB4 = new System.Windows.Forms.Label();
-            this.LB5 = new System.Windows.Forms.Label();
-            this.LB6 = new System.Windows.Forms.Label();
-            this.LB7 = new System.Windows.Forms.Label();
-            this.LB8 = new System.Windows.Forms.Label();
-            this.LB9 = new System.Windows.Forms.Label();
             this.PBTraining = new System.Windows.Forms.ProgressBar();
             this.label10 = new System.Windows.Forms.Label();
             this.Err = new System.Windows.Forms.Label();
@@ -272,16 +262,6 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.LB0);
-            this.panel1.Controls.Add(this.LB1);
-            this.panel1.Controls.Add(this.LB2);
-            this.panel1.Controls.Add(this.LB3);
-            this.panel1.Controls.Add(this.LB4);
-            this.panel1.Controls.Add(this.LB5);
-            this.panel1.Controls.Add(this.LB6);
-            this.panel1.Controls.Add(this.LB7);
-            this.panel1.Controls.Add(this.LB8);
-            this.panel1.Controls.Add(this.LB9);
             this.panel1.Controls.Add(this.PB0);
             this.panel1.Controls.Add(this.label0);
             this.panel1.Controls.Add(this.PB9);
@@ -307,106 +287,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(118, 473);
             this.panel1.TabIndex = 24;
-            // 
-            // LB0
-            // 
-            this.LB0.AutoSize = true;
-            this.LB0.Location = new System.Drawing.Point(31, 14);
-            this.LB0.Name = "LB0";
-            this.LB0.Size = new System.Drawing.Size(13, 13);
-            this.LB0.TabIndex = 23;
-            this.LB0.Tag = "0";
-            this.LB0.Text = "0";
-            // 
-            // LB1
-            // 
-            this.LB1.AutoSize = true;
-            this.LB1.Location = new System.Drawing.Point(31, 59);
-            this.LB1.Name = "LB1";
-            this.LB1.Size = new System.Drawing.Size(13, 13);
-            this.LB1.TabIndex = 24;
-            this.LB1.Tag = "1";
-            this.LB1.Text = "1";
-            // 
-            // LB2
-            // 
-            this.LB2.AutoSize = true;
-            this.LB2.Location = new System.Drawing.Point(31, 104);
-            this.LB2.Name = "LB2";
-            this.LB2.Size = new System.Drawing.Size(13, 13);
-            this.LB2.TabIndex = 25;
-            this.LB2.Tag = "2";
-            this.LB2.Text = "2";
-            // 
-            // LB3
-            // 
-            this.LB3.AutoSize = true;
-            this.LB3.Location = new System.Drawing.Point(31, 149);
-            this.LB3.Name = "LB3";
-            this.LB3.Size = new System.Drawing.Size(13, 13);
-            this.LB3.TabIndex = 26;
-            this.LB3.Tag = "3";
-            this.LB3.Text = "3";
-            // 
-            // LB4
-            // 
-            this.LB4.AutoSize = true;
-            this.LB4.Location = new System.Drawing.Point(31, 194);
-            this.LB4.Name = "LB4";
-            this.LB4.Size = new System.Drawing.Size(13, 13);
-            this.LB4.TabIndex = 27;
-            this.LB4.Tag = "4";
-            this.LB4.Text = "4";
-            // 
-            // LB5
-            // 
-            this.LB5.AutoSize = true;
-            this.LB5.Location = new System.Drawing.Point(31, 239);
-            this.LB5.Name = "LB5";
-            this.LB5.Size = new System.Drawing.Size(13, 13);
-            this.LB5.TabIndex = 28;
-            this.LB5.Tag = "5";
-            this.LB5.Text = "5";
-            // 
-            // LB6
-            // 
-            this.LB6.AutoSize = true;
-            this.LB6.Location = new System.Drawing.Point(31, 284);
-            this.LB6.Name = "LB6";
-            this.LB6.Size = new System.Drawing.Size(13, 13);
-            this.LB6.TabIndex = 29;
-            this.LB6.Tag = "6";
-            this.LB6.Text = "6";
-            // 
-            // LB7
-            // 
-            this.LB7.AutoSize = true;
-            this.LB7.Location = new System.Drawing.Point(31, 329);
-            this.LB7.Name = "LB7";
-            this.LB7.Size = new System.Drawing.Size(13, 13);
-            this.LB7.TabIndex = 30;
-            this.LB7.Tag = "7";
-            this.LB7.Text = "7";
-            // 
-            // LB8
-            // 
-            this.LB8.AutoSize = true;
-            this.LB8.Location = new System.Drawing.Point(31, 374);
-            this.LB8.Name = "LB8";
-            this.LB8.Size = new System.Drawing.Size(13, 13);
-            this.LB8.TabIndex = 31;
-            this.LB8.Tag = "8";
-            this.LB8.Text = "8";
-            // 
-            // LB9
-            // 
-            this.LB9.AutoSize = true;
-            this.LB9.Location = new System.Drawing.Point(31, 419);
-            this.LB9.Name = "LB9";
-            this.LB9.Size = new System.Drawing.Size(13, 13);
-            this.LB9.TabIndex = 32;
-            this.LB9.Tag = "9";
-            this.LB9.Text = "9";
             // 
             // PBTraining
             // 
@@ -486,16 +366,6 @@
         private System.Windows.Forms.ProgressBar PBTraining;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label Err;
-        private System.Windows.Forms.Label LB0;
-        private System.Windows.Forms.Label LB1;
-        private System.Windows.Forms.Label LB2;
-        private System.Windows.Forms.Label LB3;
-        private System.Windows.Forms.Label LB4;
-        private System.Windows.Forms.Label LB5;
-        private System.Windows.Forms.Label LB6;
-        private System.Windows.Forms.Label LB7;
-        private System.Windows.Forms.Label LB8;
-        private System.Windows.Forms.Label LB9;
     }
 }
 

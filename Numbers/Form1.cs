@@ -25,7 +25,7 @@ namespace Numbers
         private int[] bigSize = new int[] { 28 * 16, 28 * 16 };
         private int[] smallSize = new int[] { 28, 28 };
 
-        private AIv2 ai = new AIv2("relu", "sqr", new int[] { 28 * 28, 512, 256, 128, 10 });
+        private AIv2 ai = new AIv2("relu", "sqr", new int[] { 28 * 28, 100, 100, 10 });
         private ProgressBar[] progrBar;
         private Label[] progrLab;
 
@@ -33,7 +33,6 @@ namespace Numbers
         {
             InitializeComponent();
             progrBar = new ProgressBar[] { PB0, PB1, PB2, PB3, PB4, PB5, PB6, PB7, PB8, PB9 };
-            progrLab = new Label[]       { LB0, LB1, LB2, LB3, LB4, LB5, LB6, LB7, LB8, LB9 };
 
             g = Graphics.FromImage(picBox);
             gg = Graphics.FromImage(miniPicBox);
@@ -81,10 +80,7 @@ namespace Numbers
                 pred = ai.Predict(BmpToArr(miniPicBox));
 
                 for (int i = 0; i < 10; i++)
-                {
                     progrBar[i].Value = (int)(pred[i] * 100);
-                    progrLab[i].Text = (pred[i]*100).ToString();
-                }
             }
         }
 
@@ -150,6 +146,7 @@ namespace Numbers
             for (int y = 0; y < 28; y++)
                 for (int x = 0; x < 28; x++)
                     miniPicBox.SetPixel(x, y, Color.FromArgb(img[y * 28 + x], img[y * 28 + x], img[y * 28 + x]));
+            pictureBox1.Image = miniPicBox;
         }
     }
 }

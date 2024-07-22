@@ -23,7 +23,7 @@ namespace Numbers
 
         private int BACH_SIZE = 512;
         private int COUNT_EPOCHS = 400;
-        private double LearnSpeed = 0.001;
+        private double LearnSpeed = 0.0001;
         private double MaxIn = 255;
         private double MinIn = 0;
 
@@ -84,10 +84,8 @@ namespace Numbers
 
                     BTrain(bachImage, ans);
                     c += BACH_SIZE;
-                    //break;
                 }
-                CalcErr();
-                //break;
+                Console.WriteLine(CalcErr());
             }
         }
         public void BTrain(Matrix<double> inputLayer, Vector<double> answer)
@@ -102,7 +100,7 @@ namespace Numbers
                 for (int j = 0; j < Layers[i].RowCount; j++)
                     Layers[i + 1].SetRow(j, Layers[i + 1].Row(j) + Bias[i]);
 
-                if (i != CountAllLayers - 1)
+                if (i != CountAllLayers - 2)
                     Layers[i + 1] = Activation(Layers[i + 1]);
                 else
                     Layers[i + 1] = SoftMax(Layers[i + 1]);
@@ -130,13 +128,7 @@ namespace Numbers
                 Weight[i - 1] -= Layers[i - 1].Transpose() * dEdt * LearnSpeed;
                 Bias[i - 1] -= dEdt.ColumnSums() * LearnSpeed;
                 dEdH = dEdt * Weight[i - 1].Transpose();
-
-                Console.WriteLine($"Weight[] = {Weight[1][14,14]}");
-                Console.WriteLine($"Bias[]   = {Bias[0][0]}");
-                Console.WriteLine($"Layer[]  = {Layers[3][0,0]}");
-                Console.WriteLine();
             }
-
         }
 
         public double[] Predict(double[] inputLayer)
@@ -329,11 +321,7 @@ namespace Numbers
                 for (int j = 0; j < mat.ColumnCount; j++)
                     sum += Math.Exp(mat[i, j]);
                 for (int j = 0; j < mat.ColumnCount; j++)
-                {
                     ans[i, j] = Math.Exp(mat[i, j]) / sum;
-                    if (ans[i, j] > 1)
-                        continue;
-                }
             }
             return ans;
         }
@@ -410,16 +398,13 @@ namespace Numbers
             for (int i = buffL.Length - 1; i >= 1; i--)
             {
                 int j = r.Next(i + 1);
-                var temp = buffI[j];
-                buffI[j] = buffI[i];
-                buffI[i] = temp;
-                var temp2 = buffL[j];
-                buffL[j] = buffL[i];
-                buffL[i] = temp2;
+                (buffI[i], buffI[j]) = (buffI[j], buffI[i]);
+                (DbuffI[i], DbuffI[j]) = (DbuffI[j], DbuffI[i]);
+                (buffL[i], buffL[j]) = (buffL[j], buffL[i]);
             }
         }
 
-        private void CalcErr()
+        private double CalcErr()
         {
             int count = 0;
 
@@ -430,7 +415,7 @@ namespace Numbers
                 if (ans == buffL[i])
                     count++;
             }
-            Console.WriteLine((count * 100.0) / (buffI.Length/100));
+            return count * 100.0 / (buffI.Length / 100);
         }
     }
 }

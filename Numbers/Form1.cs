@@ -25,7 +25,7 @@ namespace Numbers
         private int[] bigSize = new int[] { 28 * 16, 28 * 16 };
         private int[] smallSize = new int[] { 28, 28 };
 
-        private AIv2 ai = new AIv2(new int[] { 28 * 28, 512, 128, 32, 10 });
+        private AIv2 ai = new AIv2("relu", "sqr", new int[] { 28 * 28, 512, 256, 128, 10 });
         private ProgressBar[] progrBar;
         private Label[] progrLab;
 

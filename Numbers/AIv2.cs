@@ -16,14 +16,24 @@ namespace Numbers
         private List<Matrix<double>> Layers;
         private List<Vector<double>> Bias;
         private List<Matrix<double>> Weight;
-        private double loss = 0;
+
+        private List<Vector<double>> VelosityB;
+        private List<Matrix<double>> VelosityW;
+
+        //private List<Vector<double>> BAvg;
+        //private List<Matrix<double>> WAvg;
 
         private int[] SizeEachLayer { get; }
         private int CountAllLayers { get; }
 
-        private int BACH_SIZE = 512;
         private int COUNT_EPOCHS = 400;
-        private double LearnSpeed = 0.0001;
+        private int BACH_SIZE = 512;
+
+        private double LearnSpeed = 0.01;
+        private double B1 = 0.9;
+        private double eps = 1e-10;
+        //private double B2 = 0.999;
+
         private double MaxIn = 255;
         private double MinIn = 0;
 
@@ -49,7 +59,13 @@ namespace Numbers
         private void CreatePerceptron()
         {
             Layers = new List<Matrix<double>>(CountAllLayers);
+
+            //WAvg = new List<Matrix<double>>(CountAllLayers - 1);
+            VelosityW = new List<Matrix<double>>(CountAllLayers - 1);
             Weight = new List<Matrix<double>>(CountAllLayers - 1);
+
+            //BAvg = new List<Vector<double>>(CountAllLayers - 1);
+            VelosityB = new List<Vector<double>>(CountAllLayers - 1);
             Bias = new List<Vector<double>>(CountAllLayers - 1);
 
             ContinuousUniform ran = new ContinuousUniform(-1 * Math.Sqrt(2.0 / (SizeEachLayer[0] + SizeEachLayer[CountAllLayers - 1])), Math.Sqrt(2.0 / (SizeEachLayer[0] + SizeEachLayer[CountAllLayers - 1])));
@@ -59,7 +75,12 @@ namespace Numbers
                 Layers.Add(Matrix<double>.Build.Dense(BACH_SIZE, SizeEachLayer[i]));
                 if (i != CountAllLayers - 1)
                 {
+                    //WAvg.Add(Matrix<double>.Build.Dense(SizeEachLayer[i], SizeEachLayer[i + 1]));
+                    VelosityW.Add(Matrix<double>.Build.Dense(SizeEachLayer[i], SizeEachLayer[i + 1]));
                     Weight.Add(Matrix<double>.Build.Random(SizeEachLayer[i], SizeEachLayer[i + 1], ran));
+
+                    //BAvg.Add(Vector<double>.Build.Dense(SizeEachLayer[i + 1]));
+                    VelosityB.Add(Vector<double>.Build.Dense(SizeEachLayer[i + 1]));
                     Bias.Add(Vector<double>.Build.Dense(SizeEachLayer[i + 1]));
                 }
             }
@@ -75,6 +96,7 @@ namespace Numbers
                 {
                     Matrix<double> bachImage = Matrix<double>.Build.Dense(BACH_SIZE, 28 * 28);
                     Vector<double> ans = Vector<double>.Build.Dense(BACH_SIZE);
+                    
                     for (int k = 0; k < BACH_SIZE; k++)
                     {
                         ans[k] = buffL[k + c];
@@ -85,7 +107,10 @@ namespace Numbers
                     BTrain(bachImage, ans);
                     c += BACH_SIZE;
                 }
-                Console.WriteLine(CalcErr());
+                var err = CalcErr();
+                if (err > 98)
+                    break;
+                Console.WriteLine(err);
             }
         }
         public void BTrain(Matrix<double> inputLayer, Vector<double> answer)
@@ -110,8 +135,6 @@ namespace Numbers
             for (int i = 0; i < BACH_SIZE; i++)
                 ans[i, Convert.ToInt32(answer[i])] = 1.0;
 
-            loss = Error(Layers[CountAllLayers - 1], ans);
-
             Matrix<double> dEdt;
             Matrix<double> dEdH = Matrix<double>.Build.Dense(BACH_SIZE, SizeEachLayer[CountAllLayers - 2]);
 
@@ -125,8 +148,23 @@ namespace Numbers
                 else
                     dEdt = dEdH.PointwiseMultiply(DetActivation(Layers[i]));
 
-                Weight[i - 1] -= Layers[i - 1].Transpose() * dEdt * LearnSpeed;
-                Bias[i - 1] -= dEdt.ColumnSums() * LearnSpeed;
+                // Adam
+                //VelosityW[i - 1] = B1 * VelosityW[i - 1] + (1 - B1) * (Layers[i - 1].Transpose() * dEdt);
+                //VelosityB[i - 1] = B1 * VelosityB[i - 1] + (1 - B1) * dEdt.ColumnSums();
+
+                //WAvg[i - 1] = B2 * WAvg[i - 1] + (1 - B2) * (Layers[i - 1].Transpose() * dEdt ).PointwisePower(2);
+                //BAvg[i - 1] = B2 * BAvg[i - 1] + (1 - B2) * dEdt.ColumnSums().PointwisePower(2);
+
+                //Weight[i - 1] -= (LearnSpeed * VelosityW[i - 1]).PointwiseDivide(WAvg[i - 1].PointwiseSqrt() + eps);
+                //Bias[i - 1] -= (LearnSpeed * VelosityB[i - 1]).PointwiseDivide(BAvg[i - 1].PointwiseSqrt() + eps);
+
+                // SGD + momentum
+                VelosityW[i - 1] = B1 * VelosityW[i - 1] + (LearnSpeed * Layers[i - 1].Transpose() * dEdt);
+                VelosityB[i - 1] = B1 * VelosityB[i - 1] + (LearnSpeed * dEdt.ColumnSums());
+
+                Weight[i - 1] -= LearnSpeed * VelosityW[i - 1];
+                Bias[i - 1] -= LearnSpeed * VelosityB[i - 1];
+
                 dEdH = dEdt * Weight[i - 1].Transpose();
             }
         }
@@ -172,12 +210,12 @@ namespace Numbers
                     {
                         for (int i = 0; i < BACH_SIZE; i++)
                             for (int j = 0; j < layer.ColumnCount; j++)
-                                rez -= ans[i,j] * Math.Log(Math.Max(layer[i, j], 1e-10));
+                                rez -= ans[i,j] * Math.Log(Math.Max(layer[i, j], eps));
                                
                         return rez / BACH_SIZE;
                     }
-                case "Sqr":
-                case "sqr":
+                case "Mse":
+                case "mse":
                     {
                         for (int i = 0; i < BACH_SIZE; i++)
                             for (int j = 0; j < layer.ColumnCount; j++)
@@ -198,8 +236,8 @@ namespace Numbers
                 case "Cross":
                 case "cross":
                     return layer - ans;
-                case "Sqr":
-                case "sqr":
+                case "Mse":
+                case "mse":
                     return 2 * (layer - ans);
                 default:
                     {
